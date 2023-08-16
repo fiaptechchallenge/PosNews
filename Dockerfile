@@ -4,13 +4,11 @@ RUN apk add --no-cache icu-libs
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 EXPOSE 80
 EXPOSE 443
-EXPOSE 1433
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as build
 WORKDIR /
 EXPOSE 80
 EXPOSE 443
-EXPOSE 1433
 COPY . .
 RUN dotnet restore
 RUN dotnet publish -o /app/published-app
