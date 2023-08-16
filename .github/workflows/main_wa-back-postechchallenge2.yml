@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://postechchallenge2acr.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_6a219348d44245509883d14e4aabb8e5 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_31d6391080014138b3c58d9525410d10 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_8d341613487e44519c552e3875771dc7 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_91529f774ad74758a93f6f9619a681a5 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: postechchallenge2acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_6a219348d44245509883d14e4aabb8e5 }}/aspnetimage:${{ github.sha }}
+        tags: postechchallenge2acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_8d341613487e44519c552e3875771dc7 }}/aspnetimage:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'wa-back-postechchallenge2'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_267bdb5ee1a342f698fa4e6138101f40 }}
-        images: 'postechchallenge2acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_6a219348d44245509883d14e4aabb8e5 }}/aspnetimage:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_75f07576baa742c5b03cc2b3130a560b }}
+        images: 'postechchallenge2acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_8d341613487e44519c552e3875771dc7 }}/aspnetimage:${{ github.sha }}'
