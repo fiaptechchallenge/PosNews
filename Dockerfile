@@ -1,14 +1,13 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine3.14 as build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
 COPY . .
 RUN dotnet restore
-RUN dotnet publish -o /app/published-app
-RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
-EXPOSE 80
+RUN dotnet publish /app/published-app -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine3.14 as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 WORKDIR /app
-COPY --from=build /app/published-app /app
+COPY --from=build /app/published-app/out /app
+EXPOSE 80
+ENV ASPNETCORE_URLS=http://*:80
 ENTRYPOINT [ "dotnet", "PosNews.dll" ]
-
