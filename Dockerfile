@@ -5,6 +5,8 @@ RUN dotnet restore
 RUN dotnet publish -o /app/published-app
 EXPOSE 80
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+ENV LC_ALL=en_US.UTF-8 \
+        LANG=en_US.UTF-8
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-jammy as runtime
 WORKDIR /app
