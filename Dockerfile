@@ -15,4 +15,5 @@ ENV LC_ALL=en_US.UTF-8 \
         LANG=en_US.UTF-8
 
 FROM debian:bullseye
-RUN apt-get update && apt-get install -y libicu-dev
+RUN apk add --no-cache icu-libs
+RUN apk add --no-cache icu-data-full
