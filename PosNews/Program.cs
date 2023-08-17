@@ -62,35 +62,35 @@ namespace PosNews
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSqlConnection"));
             });
 
-            //builder.Services.AddDbContext<AuthDbContext>(options =>
-            //{
-            //    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthSqlConnection"));
-            //});
+            builder.Services.AddDbContext<AuthDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("AuthSqlConnection"));
+            });
 
-            //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            //{
-            //    options.Password.RequiredLength = 5;
-            //}).AddEntityFrameworkStores<AuthDbContext>().AddDefaultTokenProviders();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 5;
+            }).AddEntityFrameworkStores<AuthDbContext>().AddDefaultTokenProviders();
 
-            //builder.Services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new TokenValidationParameters()
-            //    {
-            //        ValidateActor = true,
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        RequireExpirationTime = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
-            //        ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
-            //    };
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateActor = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    RequireExpirationTime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
+                    ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
+                };
 
-            //});
+            });
 
             //builder.Services.AddTransient<IAuthService, AuthService>();
             builder.Services.AddTransient<INoticiaRepository, NoticiaRepository>();
@@ -111,25 +111,25 @@ namespace PosNews
 
             app.UseHttpsRedirection();
 
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
 
             app.MapControllers();
 
-            //using(var scope = app.Services.CreateScope())
-            //{
-            //    var  roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            //    var roles = new[] { "admin", "user" };
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roles = new[] { "admin", "user" };
 
-            //    foreach (var role in roles)
-            //    {
-            //        if(!await roleManager.RoleExistsAsync(role))
-            //        {
-            //            await roleManager.CreateAsync(new IdentityRole(role));
-            //        }
-            //    }
-            //}
+                foreach (var role in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
+            }
 
             app.Run();
         }
