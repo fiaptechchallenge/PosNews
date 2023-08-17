@@ -92,7 +92,7 @@ namespace PosNews
 
             });
 
-            //builder.Services.AddTransient<IAuthService, AuthService>();
+            builder.Services.AddTransient<IAuthService, AuthService>();
             builder.Services.AddTransient<INoticiaRepository, NoticiaRepository>();
             builder.Services.AddAutoMapper(typeof(MappingConfig));
 
