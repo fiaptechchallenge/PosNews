@@ -3,7 +3,6 @@ WORKDIR /app
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 EXPOSE 80
 EXPOSE 443
-EXPOSE 1433
 COPY . .
 RUN dotnet restore
 RUN dotnet publish -o /app/published-app
