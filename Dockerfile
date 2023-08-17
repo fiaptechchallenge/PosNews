@@ -3,6 +3,7 @@ WORKDIR /app
 COPY . .
 RUN dotnet restore
 RUN dotnet publish -o /app/published-app
+RUN apk add icu-dev
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-jammy as runtime
