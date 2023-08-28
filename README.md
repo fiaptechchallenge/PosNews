@@ -198,7 +198,7 @@ Apresentamos aqui os pontos de destaque para a apresentação de nossa solução
 
 # 5. Conclusões
 
-Este repositório apresenta um projeto de API de notícias que usa o .NET com Entity e Identity, a tecnologia de containers, a nuvem Microsoft Azure e o GitHub Actions. Verificamos que é possível passar por todo o processo de CI/CD de uma aplicação completa que utiliza containers na nuvem Azure. Com o auxílio do GitHub, pudemos realizar deploy automático em containers e verificar de forma quase que instantânea as atualizações feitas na aplicação. Graças à nuvem da Microsoft pudemos colocar em prática a arquitura proposta e superar o desafio do tech challenge 2.
+Este repositório apresenta um projeto de API de notícias que usa o .NET com Entity e Identity, a tecnologia de containers, a nuvem Microsoft Azure e o GitHub Actions. Verificamos que é possível passar por todo o processo de CI/CD de uma aplicação completa que utiliza containers na nuvem Azure. Com o auxílio do GitHub, pudemos realizar deploy automático em containers e verificar de forma quase que instantânea as atualizações feitas na aplicação. Graças à nuvem da Microsoft pudemos colocar em prática a arquitetura proposta e superar o desafio do tech challenge 2.
 
 # 6. Referências
 
