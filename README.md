@@ -13,7 +13,7 @@
 | Aluno                               | RM            |  
 | --------------------------------    | ------------- | 
 | André Marinho Valadão Batemarchi    | 348471        | 
-| Andre Vinícius de Angelo Falcão     | 349140        | 
+| André Vinícius de Angelo Falcão     | 349140        | 
 | Kaique Leonardo Gomes da Silva      | 349128        |
 | Nathalia Lasagna Dias de souza      | 350089        |
 | Rodrigo Castagnaro                  | 349122        |
