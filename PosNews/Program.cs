@@ -30,7 +30,7 @@ namespace PosNews
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PosNews", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PosNews API", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
