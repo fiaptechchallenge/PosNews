@@ -117,16 +117,19 @@ namespace PosNews
 
             app.MapControllers();
 
-            using (var scope = app.Services.CreateScope())
+            if (builder.Environment.EnvironmentName != "Testing")
             {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                var roles = new[] { "admin", "user" };
-
-                foreach (var role in roles)
+                using (var scope = app.Services.CreateScope())
                 {
-                    if (!await roleManager.RoleExistsAsync(role))
+                    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                    var roles = new[] { "admin", "user" };
+
+                    foreach (var role in roles)
                     {
-                        await roleManager.CreateAsync(new IdentityRole(role));
+                        if (!await roleManager.RoleExistsAsync(role))
+                        {
+                            await roleManager.CreateAsync(new IdentityRole(role));
+                        }
                     }
                 }
             }
