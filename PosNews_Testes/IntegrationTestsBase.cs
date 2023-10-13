@@ -52,6 +52,9 @@ namespace PosNews_Testes
             _dataContext.Database.EnsureDeleted();
             _dataContext.Database.EnsureCreated();
 
+            //_authContext.Database.EnsureDeleted();
+            //_authContext.Database.EnsureCreated();
+
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var roles = new[] { "admin", "user" };
 
@@ -91,14 +94,16 @@ namespace PosNews_Testes
 
         public ApplicationDbContext GetContext() => _dataContext;
 
+        public AuthDbContext GetAuthContext() => _authContext;
+
         public HttpClient GetHttpClient() => _client;
 
         public string GetToken() => _token;
 
         public void Dispose()
         {
-            _authContext.Database.EnsureDeleted();
-            _authContext.Database.EnsureCreated();
+            //_authContext.Database.EnsureDeleted();
+            //_authContext.Database.EnsureCreated();
         }
     }
 }

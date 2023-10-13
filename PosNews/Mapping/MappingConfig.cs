@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Infraestrutura.Models;
+using Microsoft.AspNetCore.Identity;
+using PosNews.Models;
 using PosNews.Models.Dto;
 
 namespace PosNews.Mapping
@@ -9,6 +11,8 @@ namespace PosNews.Mapping
         public MappingConfig()
         {
             CreateMap<Noticia, NoticiaDto>().ReverseMap();
+
+            CreateMap<IdentityUser, RegisterUser>().ReverseMap();
         }
     }
 }
