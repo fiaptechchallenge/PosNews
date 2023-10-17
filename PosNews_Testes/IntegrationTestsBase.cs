@@ -4,7 +4,6 @@ using Infraestrutura.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +15,7 @@ using WireMock.Server;
 
 namespace PosNews_Testes
 {
-    public class IntegrationTestsBase<TContext> : IDisposable where TContext : DbContext
+    public class IntegrationTestsBase : IDisposable
     {
         public IMapper mapper;
         private MapperConfiguration _config;
@@ -25,8 +24,6 @@ namespace PosNews_Testes
         private HttpClient _client;
         private WireMockServer _wireMockServer;
         private string _token;
-
-        protected readonly TContext _dbContext;
 
         public IntegrationTestsBase()
         {
@@ -51,7 +48,6 @@ namespace PosNews_Testes
 
             _authContext = scope.ServiceProvider.GetService<AuthDbContext>();
             _dataContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
-            _dbContext = scope.ServiceProvider.GetService<TContext>();
 
             _client = webApplicationFactory.CreateClient();
             _token = GenerateToken(scope).Result;
@@ -116,7 +112,7 @@ namespace PosNews_Testes
             _wireMockServer.Stop();
             _wireMockServer.Dispose();
             _authContext.Database.EnsureDeleted();
-            _dbContext.Database.EnsureDeleted();
+            _dataContext.Database.EnsureDeleted();
         }
     }
 }

@@ -8,13 +8,13 @@ using PosNews_Testes.Builders;
 
 namespace PosNews_Testes.Integration
 {
-    public class NoticiaControlleTeste : IClassFixture<IntegrationTestsBase<ApplicationDbContext>>
+    public class NoticiaControlleTeste : IClassFixture<IntegrationTestsBase>
     {
-        private IntegrationTestsBase<ApplicationDbContext> _integrationaBase;
+        private IntegrationTestsBase _integrationaBase;
         private ApplicationDbContext _context;
         private HttpClient _client;
 
-        public NoticiaControlleTeste(IntegrationTestsBase<ApplicationDbContext> integrationBase)
+        public NoticiaControlleTeste(IntegrationTestsBase integrationBase)
         {
             _integrationaBase = integrationBase;
             _context = _integrationaBase.GetContext();

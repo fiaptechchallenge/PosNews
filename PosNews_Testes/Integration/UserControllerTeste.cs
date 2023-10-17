@@ -8,14 +8,14 @@ using System.Net.Http.Json;
 
 namespace PosNews_Testes.Integration
 {
-    public class UserControllerTeste : IClassFixture<IntegrationTestsBase<AuthDbContext>>
+    public class UserControllerTeste : IClassFixture<IntegrationTestsBase>
     {
-        private readonly IntegrationTestsBase<AuthDbContext> _integrationBase;
+        private readonly IntegrationTestsBase _integrationBase;
         private readonly AuthDbContext _context;
         private readonly HttpClient _client;
         private readonly IMapper _mapper;
 
-        public UserControllerTeste(IntegrationTestsBase<AuthDbContext> integrationBase)
+        public UserControllerTeste(IntegrationTestsBase integrationBase)
         {
             _integrationBase = integrationBase;
             _context = _integrationBase.GetAuthContext();
