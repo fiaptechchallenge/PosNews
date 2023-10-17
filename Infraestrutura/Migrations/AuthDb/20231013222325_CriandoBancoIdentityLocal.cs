@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infraestrutura.Migrations.AuthDb
 {
     /// <inheritdoc />
-    public partial class AdcionandoIdentity : Migration
+    public partial class CriandoBancoIdentityLocal : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

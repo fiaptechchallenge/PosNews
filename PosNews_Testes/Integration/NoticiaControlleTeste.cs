@@ -8,22 +8,26 @@ using PosNews_Testes.Builders;
 
 namespace PosNews_Testes.Integration
 {
-    public class NoticiaControlleTeste : IClassFixture<IntegrationTestsBase>
+    [Collection("Testes de Noticia")]
+    public class NoticiaControlleTeste : IClassFixture<IntegrationTestsBase<ApplicationDbContext>>
     {
-        private IntegrationTestsBase _integrationaBase;
+        private IntegrationTestsBase<ApplicationDbContext> _integrationaBase;
         private ApplicationDbContext _context;
         private HttpClient _client;
 
-        public NoticiaControlleTeste(IntegrationTestsBase integrationBase)
+        public NoticiaControlleTeste(IntegrationTestsBase<ApplicationDbContext> integrationBase)
         {
             _integrationaBase = integrationBase;
-            _context = integrationBase.GetContext();
+            _context = _integrationaBase.GetContext();
             _client = _integrationaBase.GetHttpClient();
+
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
         }
 
         [Fact]
         public async Task GetAllShouldReturnAllRegister()
-       {
+        {
             var ExpectedNews = new NoticiaBuilder().Generate(5);
             await _context.Set<Noticia>().AddRangeAsync(ExpectedNews);
             await _context.SaveChangesAsync();

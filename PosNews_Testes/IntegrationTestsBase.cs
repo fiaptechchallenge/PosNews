@@ -1,36 +1,39 @@
 ﻿using AutoMapper;
 using Infraestrutura.Contextes;
 using Infraestrutura.Contexts;
-using Infraestrutura.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PosNews;
 using PosNews.Models;
-using PosNews_Testes.Builders;
+using System.Net;
 using System.Net.Http.Json;
 using WireMock.Server;
 
 namespace PosNews_Testes
 {
-    public class IntegrationTestsBase : IDisposable
+    public class IntegrationTestsBase<TContext> : IDisposable where TContext : DbContext
     {
         public IMapper mapper;
         private MapperConfiguration _config;
         private ApplicationDbContext _dataContext;
         private AuthDbContext _authContext;
-        private SqliteConnection _connection;
         private HttpClient _client;
+        private WireMockServer _wireMockServer;
         private string _token;
+
+        protected readonly TContext _dbContext;
 
         public IntegrationTestsBase()
         {
             _config = new MapperConfiguration(cfg => cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
             mapper = _config.CreateMapper();
-            WireMockServer.Start(58116);
+
+            _wireMockServer = WireMockServer.Start();
 
             var webApplicationFactory = new WebApplicationFactory<Program>()
                 .WithWebHostBuilder(builder =>
@@ -48,32 +51,32 @@ namespace PosNews_Testes
 
             _authContext = scope.ServiceProvider.GetService<AuthDbContext>();
             _dataContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
-            
-            _dataContext.Database.EnsureDeleted();
-            _dataContext.Database.EnsureCreated();
-
-            //_authContext.Database.EnsureDeleted();
-            //_authContext.Database.EnsureCreated();
-
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var roles = new[] { "admin", "user" };
-
-            foreach (var role in roles)
-            {
-                if (!roleManager.RoleExistsAsync(role).Result)
-                {
-                    roleManager.CreateAsync(new IdentityRole(role));
-                }
-            }
+            _dbContext = scope.ServiceProvider.GetService<TContext>();
 
             _client = webApplicationFactory.CreateClient();
-            _token = GenerateToken().Result;
+            _token = GenerateToken(scope).Result;
 
             _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _token);
         }
 
-        public async Task<string> GenerateToken()
+        public async Task<string> GenerateToken(IServiceScope scope)
         {
+            if (!_authContext.Database.CanConnect())
+            {
+                _authContext.Database.EnsureCreated();
+
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roles = new[] { "admin", "user" };
+
+                foreach (var role in roles)
+                {
+                    if (!roleManager.RoleExistsAsync(role).Result)
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
+            }
+
             var regisUser = new RegisterUser()
             {
                 UserName = "Rihana",
@@ -87,8 +90,14 @@ namespace PosNews_Testes
                 Password = regisUser.Password
             };
 
-            await _client.PostAsync("api/User/Cadastrar", JsonContent.Create(regisUser));
             var tokenResult = await _client.PostAsync("api/User/Login", JsonContent.Create(loginUser));
+
+            if (tokenResult.StatusCode.Equals(HttpStatusCode.BadRequest))
+            {
+                await _client.PostAsync("api/User/Cadastrar", JsonContent.Create(regisUser));
+                tokenResult = await _client.PostAsync("api/User/Login", JsonContent.Create(loginUser));
+            }
+
             return await tokenResult.Content.ReadAsStringAsync();
         }
 
@@ -98,12 +107,16 @@ namespace PosNews_Testes
 
         public HttpClient GetHttpClient() => _client;
 
+        public WireMockServer GetWireMockServer() => _wireMockServer;
+
         public string GetToken() => _token;
 
         public void Dispose()
         {
-            //_authContext.Database.EnsureDeleted();
-            //_authContext.Database.EnsureCreated();
+            _wireMockServer.Stop();
+            _wireMockServer.Dispose();
+            _authContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureDeleted();
         }
     }
 }
