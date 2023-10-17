@@ -8,7 +8,6 @@ using PosNews_Testes.Builders;
 
 namespace PosNews_Testes.Integration
 {
-    [Collection("Testes de Noticia")]
     public class NoticiaControlleTeste : IClassFixture<IntegrationTestsBase<ApplicationDbContext>>
     {
         private IntegrationTestsBase<ApplicationDbContext> _integrationaBase;
