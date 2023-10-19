@@ -11,8 +11,6 @@ namespace PosNews.Mapping
         public MappingConfig()
         {
             CreateMap<Noticia, NoticiaDto>().ReverseMap();
-
-            CreateMap<IdentityUser, RegisterUser>().ReverseMap();
         }
     }
 }

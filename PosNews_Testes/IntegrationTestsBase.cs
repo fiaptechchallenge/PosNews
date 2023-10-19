@@ -103,10 +103,6 @@ namespace PosNews_Testes
 
         public HttpClient GetHttpClient() => _client;
 
-        public WireMockServer GetWireMockServer() => _wireMockServer;
-
-        public string GetToken() => _token;
-
         public void Dispose()
         {
             _wireMockServer.Stop();

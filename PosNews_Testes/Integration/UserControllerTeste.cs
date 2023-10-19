@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Infraestrutura.Contextes;
-using Microsoft.AspNetCore.Identity;
+﻿using Infraestrutura.Contextes;
 using PosNews.Models;
 using PosNews_Testes.Builders;
 using System.Net;
@@ -13,14 +11,12 @@ namespace PosNews_Testes.Integration
         private readonly IntegrationTestsBase _integrationBase;
         private readonly AuthDbContext _context;
         private readonly HttpClient _client;
-        private readonly IMapper _mapper;
 
         public UserControllerTeste(IntegrationTestsBase integrationBase)
         {
             _integrationBase = integrationBase;
             _context = _integrationBase.GetAuthContext();
             _client = _integrationBase.GetHttpClient();
-            _mapper = _integrationBase.mapper;
         }
 
         [Fact]
@@ -28,28 +24,14 @@ namespace PosNews_Testes.Integration
         {
             // Arrange
             var expectedRegisteredUser = new RegisterUserBuilder().Generate();
-            var ExpectedRegisteredIdentityUser = _mapper.Map<IdentityUser>(expectedRegisteredUser);
-
-            await _context.Set<IdentityUser>().AddAsync(ExpectedRegisteredIdentityUser);
-            await _context.SaveChangesAsync();
-
-            var regisUser = new RegisterUser()
-            {
-                UserName = expectedRegisteredUser.UserName,
-                Password = expectedRegisteredUser.Password,
-                Role = expectedRegisteredUser.Role
-            };
 
             // Act
-            var result = await _client.PostAsync("api/User/Cadastrar", JsonContent.Create(regisUser));
+            var result = await _client.PostAsync("api/User/Cadastrar", JsonContent.Create(expectedRegisteredUser));
             var stringResult = await result.Content.ReadAsStringAsync();
             
             // Assert
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
             Assert.Empty(stringResult);
-
-            _context.Remove(ExpectedRegisteredIdentityUser);
-            await _context.SaveChangesAsync();
         }
 
         [Fact]
@@ -62,12 +44,8 @@ namespace PosNews_Testes.Integration
                 Password = "FragoEmpanado@123",
                 Role = "admin"
             };
+
             await _client.PostAsync("api/User/Cadastrar", JsonContent.Create(regisUser));
-
-            var ExpectedRegisteredIdentityUser = _mapper.Map<IdentityUser>(regisUser);
-
-            await _context.Set<IdentityUser>().AddAsync(ExpectedRegisteredIdentityUser);
-            await _context.SaveChangesAsync();
 
             // Act
             var result = await _client.PostAsync("api/User/Cadastrar", JsonContent.Create(regisUser));
@@ -76,9 +54,6 @@ namespace PosNews_Testes.Integration
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
             Assert.NotEmpty(stringResult);
-
-            _context.Remove(ExpectedRegisteredIdentityUser);
-            await _context.SaveChangesAsync();
         }
 
         [Fact]
