@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Infraestrutura.Models;
+using Microsoft.AspNetCore.Identity;
+using PosNews.Models;
 using PosNews.Models.Dto;
 
 namespace PosNews.Mapping

@@ -23,4 +23,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\AuthDb\" />
+  </ItemGroup>
+
 </Project>

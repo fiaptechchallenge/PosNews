@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestrutura.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230810155842_AdcionandoIdentity")]
-    partial class AdcionandoIdentity
+    [Migration("20231013222325_CriandoBancoIdentityLocal")]
+    partial class CriandoBancoIdentityLocal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
