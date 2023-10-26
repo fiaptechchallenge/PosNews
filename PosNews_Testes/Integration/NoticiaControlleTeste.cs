@@ -19,9 +19,6 @@ namespace PosNews_Testes.Integration
             _integrationaBase = integrationBase;
             _context = _integrationaBase.GetContext();
             _client = _integrationaBase.GetHttpClient();
-
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
         }
 
         [Fact]
