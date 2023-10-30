@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PosNews;
 using PosNews.Models;
+using PosNews_Testes.Builders;
 using System.Net;
 using System.Net.Http.Json;
 using WireMock.Server;
@@ -46,8 +47,14 @@ namespace PosNews_Testes
 
             var scope = webApplicationFactory.Services.CreateScope();
 
-            _authContext = scope.ServiceProvider.GetService<AuthDbContext>();
             _dataContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
+            _authContext = scope.ServiceProvider.GetService<AuthDbContext>();
+
+            _dataContext?.Database.EnsureDeleted();
+            _dataContext?.Database.EnsureCreated();
+
+            _authContext?.Database.EnsureDeleted();
+            _authContext?.Database.EnsureCreated();
 
             _client = webApplicationFactory.CreateClient();
             _token = GenerateToken(scope).Result;
@@ -57,28 +64,18 @@ namespace PosNews_Testes
 
         public async Task<string> GenerateToken(IServiceScope scope)
         {
-            if (!_authContext.Database.CanConnect())
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roles = new[] { "admin", "user" };
+
+            foreach (var role in roles)
             {
-                _authContext.Database.EnsureCreated();
-
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                var roles = new[] { "admin", "user" };
-
-                foreach (var role in roles)
+                if (!roleManager.RoleExistsAsync(role).Result)
                 {
-                    if (!roleManager.RoleExistsAsync(role).Result)
-                    {
-                        await roleManager.CreateAsync(new IdentityRole(role));
-                    }
+                    await roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
 
-            var regisUser = new RegisterUser()
-            {
-                UserName = "Rihana",
-                Password = "FragoEmpanado@123",
-                Role = "admin"
-            };
+            var regisUser = new RegisterUserBuilder().Generate();
 
             var loginUser = new LoginUser()
             {
@@ -99,16 +96,14 @@ namespace PosNews_Testes
 
         public ApplicationDbContext GetContext() => _dataContext;
 
-        public AuthDbContext GetAuthContext() => _authContext;
-
         public HttpClient GetHttpClient() => _client;
 
         public void Dispose()
         {
             _wireMockServer.Stop();
             _wireMockServer.Dispose();
-            _authContext.Database.EnsureDeleted();
             _dataContext.Database.EnsureDeleted();
+            _authContext.Database.EnsureDeleted();
         }
     }
 }

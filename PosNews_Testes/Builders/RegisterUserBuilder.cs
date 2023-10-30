@@ -7,9 +7,9 @@ namespace PosNews_Testes.Builders
     {
         public RegisterUserBuilder()
         {
-            RuleFor(r => r.UserName, f => f.Name.FirstName())
-            .RuleFor(r => r.Password, f => "senhaTeste@841")
-            .RuleFor(r => r.Role, f => f.PickRandom(new List<string>() { "admin", "user" }));
+            RuleFor(r => r.UserName, f => f.Internet.UserName())
+            .RuleFor(r => r.Password, f => f.Internet.Password(length: 11, prefix: @"!0aA")) // Senha tem de ter letras (M e m), números e símbolos
+            .RuleFor(r => r.Role, f => "admin");
         }
     }
 }
