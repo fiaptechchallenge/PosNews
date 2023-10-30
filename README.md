@@ -262,7 +262,7 @@ O Tech Challenge (TC) #3 consiste em evoluir a solução do TC2, com a inclusão
 
 **Requisitos:**
 
-- Usar o Application Insights para monitar a aplicação.
+- Usar o Application Insights para monitorar a aplicação.
 
 - Usar o GitHub Actions ou o pipeline no Azure para a execução dos testes com o Docker.
 
