@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PosNews;
 using PosNews.Models;
+using PosNews_Testes.Builders;
 using System.Net;
 using System.Net.Http.Json;
 using WireMock.Server;
@@ -74,12 +75,7 @@ namespace PosNews_Testes
                 }
             }
 
-            var regisUser = new RegisterUser()
-            {
-                UserName = "Rihana",
-                Password = "FragoEmpanado@123",
-                Role = "admin"
-            };
+            var regisUser = new RegisterUserBuilder().Generate();
 
             var loginUser = new LoginUser()
             {
