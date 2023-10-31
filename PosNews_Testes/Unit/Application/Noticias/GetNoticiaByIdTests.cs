@@ -13,7 +13,7 @@ namespace PosNews_Testes.Unit.Application.Noticias
     public class GetNoticiaByIdTests
     {
         [Fact]
-        public async Task GetNoticia()
+        public async Task GetNoticiaRetornaOK()
         {
             var noticiaRepository = Mock.Of<INoticiaRepository>();
             var mapper = Mock.Of<IMapper>();
@@ -37,7 +37,7 @@ namespace PosNews_Testes.Unit.Application.Noticias
         }
 
         [Fact]
-        public async Task RetornaNotFoundSeNaoExistirNoticia()
+        public async Task SeNaoExistirNoticiaRetornaNotFound()
         {
             var noticiaRepository = Mock.Of<INoticiaRepository>();
             var mapper = Mock.Of<IMapper>();
