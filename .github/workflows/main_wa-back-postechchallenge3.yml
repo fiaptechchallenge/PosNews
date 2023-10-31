@@ -35,8 +35,8 @@ jobs:
 
     - name: Create database
       run: |
-        sqlcmd -S localhost -U sa -P QBk88ka(6> -Q "CREATE DATABASE sql-identity;"
-        sqlcmd -S localhost -U sa -P QBk88ka(6> -Q "CREATE DATABASE sql-postechchallenge2;"
+        sqlcmd -S localhost -U sa -P QBk88ka*6> -Q "CREATE DATABASE sql-identity;"
+        sqlcmd -S localhost -U sa -P QBk88ka*6> -Q "CREATE DATABASE sql-postechchallenge2;"
 
     - name: Run tests
       run: dotnet test
