@@ -13,6 +13,9 @@ jobs:
   build-and-test:
     runs-on: 'ubuntu-latest'
 
+    env:
+      MACHINE_NAME: ${{ runner.os }}
+
     steps:
     - uses: actions/checkout@v2
 
@@ -35,8 +38,8 @@ jobs:
 
     - name: Startup Container for DB
       run: |
-         docker run -v ~/docker --name local-sqlserver -e "ACCEPT_EULA=Y" -e SA_PASSWORD="QBk88ka*6*" -p 1433:1433 -d mcr.microsoft.com/mssql/server
-
+         docker run --env MACHINE_NAME=${MACHINE_NAME} -it -v ~/docker --name local-sqlserver -e "ACCEPT_EULA=Y" -e SA_PASSWORD="QBk88ka*6*" -p 1433:1433 -d mcr.microsoft.com/mssql/server
+    
     - name: Run tests
       run: dotnet test --logger "console;verbosity=diagnostic" 
 
