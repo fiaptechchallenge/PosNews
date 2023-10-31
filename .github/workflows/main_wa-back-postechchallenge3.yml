@@ -33,6 +33,9 @@ jobs:
         tags: postechchallenge3acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_e5072570538d4adb87567edf21922a54 }}/aspnetimage:${{ github.sha }}
         file: ./Dockerfile
 
+    - name: Run tests
+      run: dotnet test
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
