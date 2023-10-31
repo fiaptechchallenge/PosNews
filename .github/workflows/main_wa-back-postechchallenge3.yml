@@ -33,6 +33,11 @@ jobs:
         tags: postechchallenge3acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_e5072570538d4adb87567edf21922a54 }}/aspnetimage:${{ github.sha }}
         file: ./Dockerfile
 
+    - name: Create database
+      run: |
+        sqlcmd -S localhost -U sa -P QBk88ka(6> -Q "CREATE DATABASE sql-identity;"
+        sqlcmd -S localhost -U sa -P QBk88ka(6> -Q "CREATE DATABASE sql-postechchallenge2;"
+
     - name: Run tests
       run: dotnet test
 
