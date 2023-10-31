@@ -37,7 +37,7 @@ jobs:
       run: |
          docker run -v ~/docker --name local-sqlserver -e "ACCEPT_EULA=Y" -e SA_PASSWORD="QBk88ka*6*" -p 1433:1433 -d mcr.microsoft.com/mssql/server
          sleep 30
-         docker exec -it --tty local-sqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "QBk88ka*6*" -Q "CREATE DATABASE TestDatabase"
+         docker logs local-sqlserver | grep "BD criado com sucesso."
 
     - name: Run tests
       run: dotnet test --logger "console;verbosity=diagnostic" 
