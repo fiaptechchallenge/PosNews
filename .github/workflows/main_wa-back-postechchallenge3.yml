@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App - wa-back-postechchallenge2
+name: Build and deploy container app to Azure Web App - wa-back-postechchallenge3
 
 on:
   push:
@@ -22,16 +22,19 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://postechchallenge2acr.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_7fbc53fc6c184f39bdb12e4fc2a56f5b }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_cc6555f0fd8647e2b2bbae0c61db5b99 }}
+        registry: https://postechchallenge3acr.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_e5072570538d4adb87567edf21922a54 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_ca5967874e0046c88e97355c2779deb6 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: postechchallenge2acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7fbc53fc6c184f39bdb12e4fc2a56f5b }}/aspnetimage:${{ github.sha }}
+        tags: postechchallenge3acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_e5072570538d4adb87567edf21922a54 }}/aspnetimage:${{ github.sha }}
         file: ./Dockerfile
+
+    - name: Run tests
+      run: dotnet test
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,7 +48,7 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'wa-back-postechchallenge2'
+        app-name: 'wa-back-postechchallenge3'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_56d1b7abc3dc46b78ad706db6ca9c883 }}
-        images: 'postechchallenge2acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_7fbc53fc6c184f39bdb12e4fc2a56f5b }}/aspnetimage:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_2a25fa7294354958b56c01fb0d168935 }}
+        images: 'postechchallenge3acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_e5072570538d4adb87567edf21922a54 }}/aspnetimage:${{ github.sha }}'

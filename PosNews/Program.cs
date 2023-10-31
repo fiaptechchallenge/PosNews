@@ -96,6 +96,8 @@ namespace PosNews
             builder.Services.AddTransient<INoticiaRepository, NoticiaRepository>();
             builder.Services.AddAutoMapper(typeof(MappingConfig));
 
+            builder.Services.AddApplicationInsightsTelemetry();
+            
             var app = builder.Build();
             app.UseSwagger();
             app.UseSwaggerUI(c =>

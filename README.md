@@ -1,5 +1,8 @@
 # PosNews - FIAP Pós Tech
 
+<details>
+ <summary>Documentação do Tech Challenge 2</summary>
+
 #### Especialização em Arquitetura de Sistemas .NET com Azure: Fase II - Tech Challenge
 
 # 0. Metadados
@@ -226,6 +229,121 @@ Este repositório apresenta um projeto de API de notícias que usa o .NET com En
 
 6. [What is GitHub Actions for Azure](https://learn.microsoft.com/en-us/azure/developer/github/github-actions)
 
+</details>
 
+<details>
+ <summary>Documentação do Tech Challenge 3</summary>
 
+#### Especialização em Arquitetura de Sistemas .NET com Azure: Fase III - Tech Challenge
 
+# 0. Metadados
+
+**Nome do Projeto:** PosNews
+
+**Link da Aplicação:** https://wa-back-postechchallenge3.azurewebsites.net/swagger/index.html
+
+**Desenvolvedores do Projeto:**
+
+| Aluno                               | RM            |  
+| --------------------------------    | ------------- | 
+| André Marinho Valadão Batemarchi    | 348471        | 
+| André Vinícius de Angelo Falcão     | 349140        | 
+| Kaique Leonardo Gomes da Silva      | 349128        |
+| Nathalia Lasagna Dias de souza      | 350089        |
+| Rodrigo Castagnaro                  | 349122        |
+
+**Tecnologias Utilizadas:**
+
+As mesmas que o Tech Challenge 2.
+
+# 1. Desafio
+
+O Tech Challenge (TC) #3 consiste em evoluir a solução do TC2, com a inclusão de um projeto de testes contendo testes unitários e um teste integrado para verificar se a API está inserindo e carregando os dados corretamente no Banco de Dados (BD).
+
+**Requisitos:**
+
+- Usar o Application Insights para monitorar a aplicação.
+
+- Usar o GitHub Actions ou o pipeline no Azure para a execução dos testes com o Docker.
+
+- Enviar o GitHub do projeto (este repositório) juntamente com a configuração do pipeline de CI da aplicação para a avaliação do professor.
+  
+- A explicação da solução deve ser registrada em um vídeo e compartilhada no portal do aluno FIAP.
+
+# 2. Nossa Solução
+
+Primeiramente, definimos que, da mesma forma que no TC2, usaríamos o GitHub Actions.
+
+Especificamente sobre os testes, decidimos pelos seguintes frameworks compatíveis com o .NET 6:
+
+- Testes unitários e integrado: Xunit.
+
+- Mock: Wiremock.
+
+- Faker: Bogus.
+
+- Stub: NSubstitute.
+
+## 2.1. Arquitetura Proposta
+
+Como neste desafio estamos somente adicionando um novo projeto de testes, seguimos a mesma arquitetura proposta no TC2.
+
+## 2.2. Explicação dos Recursos
+
+Utilizamos os mesmos recursos do TC2, com a diferença de que habilitamos o Application Insights em nosso recurso de Aplicação Web.
+
+## 2.3. Código Desenvolvido
+
+O código desenvolvido no TC3 é o seguinte:
+
+- Escrita dos testes.
+
+- Configuração do pipeline para rodar os testes.
+
+- Configurações do Application Insights.
+
+**Projeto PosNews_Testes:**
+
+- Os testes unitários se encontram na pasta Unit.
+
+- O teste integrado se encontra na pasta Integration.
+
+- A classe IntegrationTestsBase é a responsável por fazer o setup do projeto de testes.
+
+**Pasta .github/workflows:**
+
+- Contém o .yml utilizado para realizar deploy automático da aplicação na nuvem Azure com GitHub Actions **e a execução dos testes com Docker**.
+
+**Arquivos e configurações do Application Insights**
+
+- Instalação do pacote Microsoft.ApplicationInsights.AspNetCore.
+
+- Configuração da Instrumentation Key, obtida do recurso de App Insights via portal Azure e configurada no appsettings.json.
+
+- Adição das configurações no Program.cs.
+
+# 3. Azure - Comandos e Configurações Utilizados
+
+Utilizamos os mesmos comandos e configurações do TC2, com a diferença que habilitamos o Application Insights para o recurso de Web App via portal Azure.
+
+# 4. Observações
+
+Apresentamos aqui os pontos de destaque para a apresentação de nossa solução:
+
+1. Faremos uma alteração simples via GitHub para demonstrar o Deploy Automático com os testes sendo executados: [Classe Program](/PosNews/Program.cs).
+
+# 5. Conclusões
+
+Verificamos que é possível ter uma solução completa da nuvem Azure, contendo, inclusive telemetria via Application Insights e a execução automática de testes com o GitHub Actions. Essa facilidade nos permite criar aplicações robustas, com monitoramento e testáveis, elevando, assim, a qualidade do projeto.
+
+# 6. Referências
+
+1. [Configure Application Insights for your ASP.NET website](https://learn.microsoft.com/en-us/azure/azure-monitor/app/asp-net)
+
+2. [Quickstart: Create a test validation GitHub workflow](https://learn.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action)
+
+3. [Tutorial: Create a web API with ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0&tabs=visual-studio)
+
+4. [What is GitHub Actions for Azure](https://learn.microsoft.com/en-us/azure/developer/github/github-actions)
+
+ </details>
