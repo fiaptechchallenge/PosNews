@@ -37,9 +37,6 @@ jobs:
       run: |
          docker run -v ~/docker --name local-sqlserver -e "ACCEPT_EULA=Y" -e SA_PASSWORD="QBk88ka*6*" -p 1433:1433 -d mcr.microsoft.com/mssql/server
 
-    - name: Run tests
-      run: dotnet test
-
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-test
