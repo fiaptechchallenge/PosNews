@@ -36,7 +36,7 @@ jobs:
     - name: Startup Container for DB
       run: |
          docker run -v ~/docker --name local-sqlserver -e "ACCEPT_EULA=Y" -e SA_PASSWORD="QBk88ka*6*" -p 1433:1433 -d mcr.microsoft.com/mssql/server
-         docker logs local-sqlserver | grep "BD criado com sucesso."
+         sleep 30
 
     - name: Run tests
       run: dotnet test --logger "console;verbosity=diagnostic" 
