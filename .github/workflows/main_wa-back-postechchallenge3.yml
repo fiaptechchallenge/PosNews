@@ -33,11 +33,6 @@ jobs:
         tags: postechchallenge3acr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_e5072570538d4adb87567edf21922a54 }}/aspnetimage:${{ github.sha }}
         file: ./Dockerfile
 
-    - name: Startup Container for DB
-      run: |
-         docker run -v ~/docker --name local-sqlserver -e "ACCEPT_EULA=Y" -e SA_PASSWORD="QBk88ka*6*" -p 1433:1433 -d mcr.microsoft.com/mssql/server
-         sleep 30
-
     - name: Run tests
       run: dotnet test --logger "console;verbosity=diagnostic" 
 
