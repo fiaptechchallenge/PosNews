@@ -37,11 +37,6 @@ jobs:
       run: |
          docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=QBk88ka*6*" \
          -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
-      
-    - name: Check SQL Server Version
-      run: |
-         sleep 5
-         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P QBk88ka*6* -q "SELECT @@VERSION
 
     - name: Run tests
       run: dotnet test
