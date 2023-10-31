@@ -17,7 +17,7 @@ namespace PosNews_Testes.Unit.Application.Noticias
     public class GetAllAsyncTests
     {
         [Fact]
-        public async Task ListaNoticia()
+        public async Task ListaNoticiaRetornaOK()
         {
             var noticiaRepository = Mock.Of<INoticiaRepository>();
             var mapper = Mock.Of<IMapper>();
