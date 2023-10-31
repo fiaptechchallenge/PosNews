@@ -14,7 +14,7 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     env:
-      MACHINE_NAME: ${{ runner.os }}
+      MACHINE_NAME: ${{ toJson(github) }}
 
     steps:
     - uses: actions/checkout@v2
