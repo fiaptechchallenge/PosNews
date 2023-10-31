@@ -36,7 +36,7 @@ namespace PosNews.Controllers
             }
             var result =  await _authService.Login(user);
 
-            if(result == true) 
+            if(result) 
             { 
                 var tokenString = await _authService.GenerateTokenString(user);
                 return Ok(tokenString);

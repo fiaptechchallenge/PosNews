@@ -15,7 +15,7 @@ namespace PosNews_Testes.Unit.Application.Users
     public class RegisterUserTests
     {
         [Fact]
-        public async Task RegistraUsuario()
+        public async Task RegistraUsuarioRetornaOK()
         {
             var authService = Mock.Of<IAuthService>();
 
