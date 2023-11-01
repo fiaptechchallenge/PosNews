@@ -50,10 +50,10 @@ namespace PosNews_Testes
             _dataContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
             _authContext = scope.ServiceProvider.GetService<AuthDbContext>();
 
-            //_dataContext?.Database.EnsureDeleted();
+            _dataContext?.Database.EnsureDeleted();
             _dataContext?.Database.EnsureCreated();
 
-            //_authContext?.Database.EnsureDeleted();
+            _authContext?.Database.EnsureDeleted();
             _authContext?.Database.EnsureCreated();
 
             _client = webApplicationFactory.CreateClient();
@@ -65,7 +65,7 @@ namespace PosNews_Testes
         public async Task<string> GenerateToken(IServiceScope scope)
         {
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var roles = new[] { "admin", "user" };
+            var roles = new[] { "admin" };
 
             foreach (var role in roles)
             {
