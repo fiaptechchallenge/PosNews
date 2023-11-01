@@ -8,6 +8,7 @@ using PosNews_Testes.Builders;
 using System.Net.Http.Json;
 using System.Net;
 using PosNews.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PosNews_Testes.Integration
 {
@@ -50,11 +51,19 @@ namespace PosNews_Testes.Integration
         [Fact]
         public async Task GetByIdShouldReturnOk()
         {
-            var ExpectedNews = new NoticiaBuilder().Generate();
+            var ExpectedNews = new NoticiaBuilder().ComId(IdCreated).Generate();
             await _context.Set<Noticia>().AddAsync(ExpectedNews);
             await _context.SaveChangesAsync();
 
-            var result = await _client.GetAsync($"api/Noticia/{IdCreated}");
+            var noticiaEsperada = await _context.Noticia
+                .Where(x => x.DataPublicacao.Equals(ExpectedNews.DataPublicacao)
+                && x.Chapeu.Equals(ExpectedNews.Chapeu)
+                && x.Autor.Equals(ExpectedNews.Autor)
+                && x.Titulo.Equals(ExpectedNews.Titulo)
+                && x.Descricao.Equals(ExpectedNews.Descricao))
+                .FirstOrDefaultAsync();
+
+            var result = await _client.GetAsync($"api/Noticia/{noticiaEsperada.Id}");
             var stringResult = await result.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);

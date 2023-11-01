@@ -12,5 +12,12 @@ namespace PosNews_Testes.Builders
             RuleFor(n => n.Chapeu, f => f.Name.FullName());
             RuleFor(n => n.Autor, f => f.Name.FullName());
         }
+
+        public NoticiaBuilder ComId(int idNoticia)
+        {
+            RuleFor(n => n.Id, idNoticia);
+
+            return this;
+        }
     }
 }
