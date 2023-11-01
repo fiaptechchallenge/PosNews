@@ -51,7 +51,7 @@ namespace PosNews_Testes.Integration
         [Fact]
         public async Task GetByIdShouldReturnOk()
         {
-            var ExpectedNews = new NoticiaBuilder().ComId(IdCreated).Generate();
+            var ExpectedNews = new NoticiaBuilder().Generate();
             await _context.Set<Noticia>().AddAsync(ExpectedNews);
             await _context.SaveChangesAsync();
 

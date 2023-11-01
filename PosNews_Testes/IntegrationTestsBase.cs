@@ -65,7 +65,7 @@ namespace PosNews_Testes
         public async Task<string> GenerateToken(IServiceScope scope)
         {
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var roles = new[] { "admin" };
+            var roles = new[] { "admin", "user" };
 
             foreach (var role in roles)
             {
