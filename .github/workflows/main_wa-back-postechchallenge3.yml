@@ -14,7 +14,7 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     env:
-      MACHINE_NAME: ${{ toJson(github) }}
+      MACHINE_NAME: ${{ github }}
 
     steps:
     - uses: actions/checkout@v2
@@ -38,7 +38,11 @@ jobs:
 
     - name: Startup Container for DB
       run: |
-         docker run --env MACHINE_NAME=${MACHINE_NAME} -v ~/docker --name local-sqlserver -e "ACCEPT_EULA=Y" -e SA_PASSWORD="QBk88ka*6*" -p 1433:1433 -d mcr.microsoft.com/mssql/server
+         docker run -v ~/docker --name local-sqlserver -e "ACCEPT_EULA=Y" -e SA_PASSWORD="QBk88ka*6*" -p 1433:1433 -d mcr.microsoft.com/mssql/server
+         with:
+          time: '5s'
+          needs: Startup Container for DB
+          
     
     - name: Run tests
       run: dotnet test --logger "console;verbosity=diagnostic" 
