@@ -102,8 +102,8 @@ namespace PosNews_Testes
         {
             _wireMockServer.Stop();
             _wireMockServer.Dispose();
-            _dataContext.Database.EnsureDeleted();
-            _authContext.Database.EnsureDeleted();
+            //_dataContext.Database.EnsureDeleted();
+            //_authContext.Database.EnsureDeleted();
         }
     }
 }
