@@ -13,9 +13,6 @@ jobs:
   build-and-test:
     runs-on: 'ubuntu-latest'
 
-    env:
-      MACHINE_NAME: ${{ github }}
-
     steps:
     - uses: actions/checkout@v2
 
