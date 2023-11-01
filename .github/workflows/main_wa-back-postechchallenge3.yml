@@ -40,9 +40,7 @@ jobs:
           time: '5s'
     
     - name: Run tests
-      run: |
-        dotnet test --logger "console;verbosity=diagnostic" 
-        needs: Startup Container for DB
+      run: dotnet test --logger "console;verbosity=diagnostic" 
 
   deploy:
     runs-on: ubuntu-latest
